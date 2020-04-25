@@ -18,7 +18,7 @@ $./data/rice_datasets-test
 ├──── test.txt
 ````
 
-**Pre-trained Model in RPC dataset**
+**Pre-trained Model on RPC dataset**
 * Download the model from: [BaiduYun (48.8 
 Mb)](https://pan.baidu.com/s/1pWowlSpKdhg6l_9qET2yUw) (code: 9g8e) or [OneDrive (48.8 
 Mb)](https://1drv.ms/u/s!AkNf_IPSDakh5zdqa5c8Co5QzB9y?e=SAiyly)
@@ -28,6 +28,10 @@ $./snapshots/rice/sfc2net
 ├──── model_best.pth.tar
 ````
 
+**Model Test**
+```python
+python hltest.py
+```
 
 
 ### Rice Plant Counting
