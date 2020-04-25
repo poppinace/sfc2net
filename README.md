@@ -35,9 +35,9 @@ $./snapshots/rice/sfc2net
 | :--:                | :--:                  | :--:          | :--:   | :--:   | :--:  | :--:          |
 | MCNN                | CVPR   2015           | No            | 92.11  | 121.52 | 15.33 | 0.89          |
 | TasselNetV2         | Plant Methods   2019  | No            | 59.39  | 95.80  | 7.86  | 0.91          |
-| CSRNet              | CVPR   2018           | Yes           | 49.22  | 74.58  | 7.47  | 0.91          |
-| BCNet               | TCSVT  2019           | Yes           | 31.28  | 49.82  | 4.76  | 0.96          |
-| SFC<sup>2</sup>Net  | This Paper            | Yes           | 25.60  | 37.94  | 4.12  | 0.98          |
+| CSRNet              | CVPR   2018           | VGG16         | 49.22  | 74.58  | 7.47  | 0.91          |
+| BCNet               | TCSVT  2019           | VGG16         | 31.28  | 49.82  | 4.76  | 0.96          |
+| SFC<sup>2</sup>Net  | This Paper            | MixNet-L      | 25.60  | 37.94  | 4.12  | 0.98          |
 
 
 ### Comparison of Different Backbones
