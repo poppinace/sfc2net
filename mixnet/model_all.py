@@ -1644,80 +1644,7 @@ def tf_mixnet_l(pretrained=False, num_classes=1000, in_chans=3, **kwargs):
     if pretrained:
         load_pretrained(model, default_cfg, num_classes, in_chans)
     return model
-
-
-
-class GenEfficientNetMyself(nn.Module):
-    """ Generic EfficientNet
-    An implementation of efficient network architectures, in many cases mobile optimized networks:
-      * MobileNet-V1
-      * MobileNet-V2
-      * MobileNet-V3
-      * MnasNet A1, B1, and small
-      * FBNet A, B, and C
-      * ChamNet (arch details are murky)
-      * Single-Path NAS Pixel1
-      * EfficientNet B0-B5
-      * MixNet S, M, L
-    """
-
-    def __init__(self, block_args, num_classes=1000, in_chans=3, stem_size=32, num_features=1280,
-                 channel_multiplier=1.0, channel_divisor=8, channel_min=None,
-                 pad_type='', act_fn=F.relu, drop_rate=0., drop_connect_rate=0.,
-                 se_gate_fn=sigmoid, se_reduce_mid=False, bn_args=_BN_ARGS_PT,
-                 global_pool='avg', head_conv='default', weight_init='goog',mix='l'):
-        super(GenEfficientNetMyself, self).__init__()
-        
-        self.num_classes = num_classes
-        self.drop_rate = drop_rate
-        self.act_fn = act_fn
-        self.num_features = num_features
-
-        stem_size = _round_channels(stem_size, channel_multiplier, channel_divisor, channel_min)
-        self.conv_stem = select_conv2d(in_chans, stem_size, 3, stride=2, padding=pad_type)
-        self.bn1 = nn.BatchNorm2d(stem_size, **bn_args)
-        in_chs = stem_size
-
-        builder = _BlockBuilder(
-            channel_multiplier, channel_divisor, channel_min,
-            pad_type, act_fn, se_gate_fn, se_reduce_mid,
-            bn_args, drop_connect_rate, verbose=_DEBUG)
-        self.blocks = nn.Sequential(*builder(in_chs, block_args))
-        
-#        l1 = self.blocks[:4]
-#        l2= self.blocks[4]
-        in_chs = builder.in_chs
-
-        if not head_conv or head_conv == 'none':
-            self.efficient_head = False
-            self.conv_head = None
-            assert in_chs == self.num_features
-        else:
-            self.efficient_head = head_conv == 'efficient'
-            self.conv_head = select_conv2d(in_chs, self.num_features, 1, padding=pad_type)
-            self.bn2 = None if self.efficient_head else nn.BatchNorm2d(self.num_features, **bn_args)
-
-        for m in self.modules():
-            if weight_init == 'goog':
-                _initialize_weight_goog(m)
-            else:
-                _initialize_weight_default(m)
-
-
-
-    def forward_features(self, x, pool=True):
-        x = self.conv_stem(x)
-        x = self.bn1(x)
-        x = self.act_fn(x, inplace=True)
-        x = self.blocks(x)
-        x = self.conv_head(x)
-        x = self.bn2(x)
-        x = self.act_fn(x, inplace=True)
-        return x
-
-    def forward(self, x):
-        x = self.forward_features(x)
-        return x
+    
 class GenEfficientNetMyself_fusion(nn.Module):
     """ Generic EfficientNet
     An implementation of efficient network architectures, in many cases mobile optimized networks:
@@ -1795,75 +1722,6 @@ class GenEfficientNetMyself_fusion(nn.Module):
     def forward(self, x):
         x2,x4,x8,x16,x32 = self.forward_features(x)
         return x2,x4,x8,x16,x32
-    
-def _gen_mixnet_s_myself(channel_multiplier=1.0, num_classes=1000, **kwargs):
-    """Creates a MixNet Small model.
-    Ref impl: https://github.com/tensorflow/tpu/tree/master/models/official/mnasnet/mixnet
-    Paper: https://arxiv.org/abs/1907.09595
-    """
-    arch_def = [
-        # stage 0, 112x112 in
-        ['ds_r1_k3_s1_e1_c16'],  # relu
-        # stage 1, 112x112 in
-        ['ir_r1_k3_a1.1_p1.1_s2_e6_c24', 'ir_r1_k3_a1.1_p1.1_s1_e3_c24'],  # relu
-        # stage 2, 56x56 in
-        ['ir_r1_k3.5.7_s2_e6_c40_se0.5_nsw', 'ir_r3_k3.5_a1.1_p1.1_s1_e6_c40_se0.5_nsw'],  # swish
-        # stage 3, 28x28 in
-        ['ir_r1_k3.5.7_p1.1_s2_e6_c80_se0.25_nsw', 'ir_r2_k3.5_p1.1_s1_e6_c80_se0.25_nsw'],  # swish
-        # stage 4, 14x14in
-        ['ir_r1_k3.5.7_a1.1_p1.1_s1_e6_c120_se0.5_nsw', 'ir_r2_k3.5.7.9_a1.1_p1.1_s1_e3_c120_se0.5_nsw'],  # swish
-        # stage 5, 14x14in
-        ['ir_r1_k3.5.7.9.11_s2_e6_c200_se0.5_nsw', 'ir_r2_k3.5.7.9_p1.1_s1_e6_c200_se0.5_nsw'],  # swish
-        # 7x7
-    ]
-    model = GenEfficientNetMyself(
-        _decode_arch_def(arch_def),
-        num_classes=num_classes,
-        stem_size=16,
-        num_features=1536,
-        channel_multiplier=channel_multiplier,
-        channel_divisor=8,
-        channel_min=None,
-        bn_args=_resolve_bn_args(kwargs),
-        act_fn=F.relu,
-        **kwargs
-    )
-    return model
-
-
-def _gen_mixnet_m_self(channel_multiplier=1.0, num_classes=1000, **kwargs):
-    """Creates a MixNet Medium-Large model.
-    Ref impl: https://github.com/tensorflow/tpu/tree/master/models/official/mnasnet/mixnet
-    Paper: https://arxiv.org/abs/1907.09595
-    """
-    arch_def = [
-        # stage 0, 112x112 in
-        ['ds_r1_k3_s1_e1_c24'],  # relu
-        # stage 1, 112x112 in
-        ['ir_r1_k3.5.7_a1.1_p1.1_s2_e6_c32', 'ir_r1_k3_a1.1_p1.1_s1_e3_c32'],  # relu
-        # stage 2, 56x56 in
-        ['ir_r1_k3.5.7.9_s2_e6_c40_se0.5_nsw', 'ir_r3_k3.5_a1.1_p1.1_s1_e6_c40_se0.5_nsw'],  # swish
-        # stage 3, 28x28 in
-        ['ir_r1_k3.5.7_s2_e6_c80_se0.25_nsw', 'ir_r3_k3.5.7.9_a1.1_p1.1_s1_e6_c80_se0.25_nsw'],  # swish
-        # stage 4, 14x14in
-        ['ir_r1_k3_s1_e6_c120_se0.5_nsw', 'ir_r3_k3.5.7.9_a1.1_p1.1_s1_e3_c120_se0.5_nsw'],  # swish
-        # stage 5, 14x14in
-        ['ir_r1_k3.5.7.9_s2_e6_c200_se0.5_nsw', 'ir_r3_k3.5.7.9_p1.1_s1_e6_c200_se0.5_nsw'],  # swish
-        # 7x7
-    ]
-    model = GenEfficientNetMyself(
-        _decode_arch_def(arch_def),
-        num_classes=num_classes,
-        stem_size=24,
-        num_features=1536,
-        channel_multiplier=channel_multiplier,
-        channel_divisor=8,
-        channel_min=None,
-        bn_args=_resolve_bn_args(kwargs),
-        act_fn=F.relu,
-        **kwargs
-    )
-    return model
 
 def _gen_mixnet_m_self_fusion(channel_multiplier=1.0, num_classes=1000, **kwargs):
     """Creates a MixNet Medium-Large model.
@@ -1899,20 +1757,6 @@ def _gen_mixnet_m_self_fusion(channel_multiplier=1.0, num_classes=1000, **kwargs
     )
     return model
 
-def tf_mixnet_l_myself(pretrained=False, num_classes=1000, in_chans=3, **kwargs):
-    """Creates a MixNet Large model. Tensorflow compatible variant
-    """
-    default_cfg = default_cfgs['tf_mixnet_l']
-    kwargs['bn_eps'] = _BN_EPS_TF_DEFAULT
-    kwargs['pad_type'] = 'same'
-    model = _gen_mixnet_m_self(
-        channel_multiplier=1.3, num_classes=num_classes, in_chans=in_chans, **kwargs)
-    model.default_cfg = default_cfg
-#    model.load_state_dict(model_zoo.load_url(model_urls['vgg16']))
-#    state_dict = model_zoo.load_url(default_cfg['url'])
-#    model.load_state_dict(state_dict)
-    return model
-
 def tf_mixnet_l_myself_fusion(pretrained=False, num_classes=1000, in_chans=3, **kwargs):
     """Creates a MixNet Large model. Tensorflow compatible variant
     """
@@ -1927,16 +1771,6 @@ def tf_mixnet_l_myself_fusion(pretrained=False, num_classes=1000, in_chans=3, **
 #    model.load_state_dict(state_dict)
     return model
 
-def tf_mixnet_s_myself(pretrained=False, num_classes=1000, in_chans=3, **kwargs):
-    """Creates a MixNet Small model. Tensorflow compatible variant
-    """
-    default_cfg = default_cfgs['tf_mixnet_s']
-    kwargs['bn_eps'] = _BN_EPS_TF_DEFAULT
-    kwargs['pad_type'] = 'same'
-    model = _gen_mixnet_s_myself(
-        channel_multiplier=1.0, num_classes=num_classes, in_chans=in_chans, **kwargs)
-    model.default_cfg = default_cfg
-    return model
 
 def gen_efficientnet_model_names():
     return set(_models)

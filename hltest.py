@@ -18,7 +18,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from torch.optim.lr_scheduler import StepLR, MultiStepLR
 
 from hlnet import *
 from hldatasetv2 import *
@@ -110,42 +109,7 @@ def get_arguments():
     
     return parser.parse_args()
 
-def save_checkpoint(state, snapshot_dir, filename='model_ckpt.pth.tar'):
-    torch.save(state, '{}/{}'.format(snapshot_dir, filename))
-
-class CrossEntropyLoss2d(nn.Module):
-    def __init__(self, weight=None, size_average=True):
-        super(CrossEntropyLoss2d, self).__init__()
-        self.nll_loss = nn.NLLLoss2d(None, size_average,reduce=size_average)
-
-    def forward(self, inputs, targets):
-        n, c, h, w = inputs.size()
-        loss_t=self.nll_loss(F.log_softmax(inputs), targets[:,0,:,:])
-  
-        return loss_t     
-    
-def soft_l1_loss(pd, gt, epsilon=1e-6):
-    bs, _, w, h = pd.size()
-    diff = pd - gt
-    loss = torch.sqrt(diff * diff + epsilon ** 2)
-    loss = loss.sum(dim=2).sum(dim=2) / (w * h)
-    loss = loss.sum() / bs
-    return loss
-
-def plot_learning_curves(net, dir_to_save):
-    # plot learning curves
-    fig = plt.figure(figsize=(16, 9))
-    ax1 = fig.add_subplot(1, 2, 1)
-    ax1.plot(net.train_loss['epoch_loss'], label='train loss', color='tab:blue')
-    ax1.legend(loc = 'upper right')
-    ax2 = fig.add_subplot(1, 2, 2)
-    ax2.plot(net.val_loss['epoch_loss'], label='val mae', color='tab:orange')
-    ax2.legend(loc = 'upper right')
-    # ax2.set_ylim((0,50))
-    fig.savefig(os.path.join(dir_to_save, 'learning_curves.png'), bbox_inches='tight', dpi = 300)
-    plt.close()
-
-def validate(net, valset, val_loader, args):
+def test(net, testset, test_loader, args):
     # switch to 'eval' mode
     net.eval()
     cudnn.benchmark = False
@@ -162,7 +126,7 @@ def validate(net, valset, val_loader, args):
     gt_counts = []
     with torch.no_grad():
         avg_frame_rate = 0.0
-        for i, sample in enumerate(val_loader):            
+        for i, sample in enumerate(test_loader):            
             torch.cuda.synchronize()
             start = time()
 
@@ -197,7 +161,7 @@ def validate(net, valset, val_loader, args):
                 output_save = cmap(output_save) * 255.
                 # image composition
                 # image = valset.images[image_name]
-                image = valset.images[image_list[i][0]]
+                image = testset.images[image_list[i][0]]
                 nh, nw = output_save.shape[:2]
                 image = cv2.resize(image, (nw, nh), interpolation = cv2.INTER_CUBIC)
                 output_save = 0.5 * image + 0.5 * output_save[:, :, 0:3]
@@ -226,7 +190,7 @@ def validate(net, valset, val_loader, args):
             if i % args.print_every == args.print_every - 1:
                 print(
                     'epoch: {0}, test: {1}/{2}, pre: {3:.2f}, gt:{4:.2f}, me:{5:.2f}, mae: {6:.2f}, mse: {7:.2f}, relerr: {8:.2f}%, relerr10: {9:.2f}%, frame: {10:.2f}Hz/{11:.2f}Hz'
-                    .format(0, i+1, len(val_loader), pdcount, gtcount, pdcount-gtcount, mae, mse, relerr, relerr10, running_frame_rate, avg_frame_rate)
+                    .format(0, i+1, len(test_loader), pdcount, gtcount, pdcount-gtcount, mae, mse, relerr, relerr10, running_frame_rate, avg_frame_rate)
                 )
             start = time()
     r2 = rsquared(pd_counts, gt_counts)
@@ -297,7 +261,7 @@ def main():
     ]
     composed_transform_val = transforms.Compose(transform_val)
 
-    valset = dataset(
+    testset = dataset(
         data_dir=args.data_dir,
         data_list=args.data_val_list,
         ratio=args.resize_ratio,
@@ -305,15 +269,15 @@ def main():
         transform=composed_transform_val,
         gauss_kernel=args.gauss_kernel
     )
-    val_loader = DataLoader(
-        valset,
+    test_loader = DataLoader(
+        testset,
         batch_size=1,
         shuffle=False,
         num_workers=args.num_workers,
         pin_memory=True
     )
 
-    validate(net, valset, val_loader, args)
+    test(net, testset, test_loader, args)
     return
     
 if __name__ == "__main__":
