@@ -75,7 +75,7 @@ def get_arguments():
     parser.add_argument("--data-dir", type=str, default=DATA_DIR, help="Path to the directory containing the dataset.")
     parser.add_argument("--dataset", type=str, default=DATASET, help="Dataset type.")
     parser.add_argument("--exp", type=str, default=EXP, help="Experiment path.")
-    parser.add_argument("--data-test-list", type=str, default=DATA_TEST_LIST, help="Path to the file listing the images in the val dataset.")
+    parser.add_argument("--data-test-list", type=str, default=DATA_TEST_LIST, help="Path to the file listing the images in the test dataset.")
     parser.add_argument("--restore-from", type=str, default=RESTORE_FROM, help="Name of restored model.")
     parser.add_argument("--snapshot-dir", type=str, default=SNAPSHOT_DIR, help="Where to save snapshots of the model.")
     parser.add_argument("--result-dir", type=str, default=RESULT_DIR, help="Where to save inferred results.")
