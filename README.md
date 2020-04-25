@@ -6,7 +6,7 @@ The code has been tested on Python 3.7.4 and PyTorch 1.2.0. Please follow the
 official instructions to configure your environment. See other required packages
 in `requirements.txt` (pending).
 
-## Test SFC2Net Model
+## Test SFC<sup>2</sup>Net Model
 **Rice Plant Counting**
 * Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (597 
 Mb)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv ) or [OneDrive (597 
