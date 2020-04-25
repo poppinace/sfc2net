@@ -68,6 +68,6 @@ python hltest.py
 ![alt text][E1]
 ![alt text][E2]
 ![alt text][E3]
-[E1]: https://github.com/poppinace/sfc2net/example/ "Example1"
-[E1]: https://github.com/poppinace/sfc2net/example/ "Example1"
-[E1]: https://github.com/poppinace/sfc2net/example/ "Example1"
+[E1]: https://github.com/poppinace/sfc2net/example/T0004_SD_20120515110242_01.png "Example1"
+[E2]: https://github.com/poppinace/sfc2net/example/T0004_SD_20130726110633_02.png "Example2"
+[E3]: https://github.com/poppinace/sfc2net/example/T0004_SD_20130728110630_01.png "Example3"
