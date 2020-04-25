@@ -68,6 +68,3 @@ python hltest.py
 
 ![Example1](https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20120515110242_01.png "Example1")
 
-![Example2](https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130726110633_02.png "Example2")
-
-![Example3](https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130728110630_01.png "Example3")
