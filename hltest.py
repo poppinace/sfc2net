@@ -33,7 +33,7 @@ IMG_STD = [0.1058, 0.1065, 0.0999 ]
 DATA_DIR = './data/rice_datasets-test/'
 DATASET = 'rice'
 EXP = 'sfc2net'
-DATA_VAL_LIST = './data/rice_datasets-test/test.txt'
+DATA_TEST_LIST = './data/rice_datasets-test/test.txt'
 
 RESTORE_FROM = 'model_best.pth.tar'
 SNAPSHOT_DIR = './snapshots'
@@ -75,7 +75,7 @@ def get_arguments():
     parser.add_argument("--data-dir", type=str, default=DATA_DIR, help="Path to the directory containing the dataset.")
     parser.add_argument("--dataset", type=str, default=DATASET, help="Dataset type.")
     parser.add_argument("--exp", type=str, default=EXP, help="Experiment path.")
-    parser.add_argument("--data-val-list", type=str, default=DATA_VAL_LIST, help="Path to the file listing the images in the val dataset.")
+    parser.add_argument("--data-test-list", type=str, default=DATA_TEST_LIST, help="Path to the file listing the images in the val dataset.")
     parser.add_argument("--restore-from", type=str, default=RESTORE_FROM, help="Name of restored model.")
     parser.add_argument("--snapshot-dir", type=str, default=SNAPSHOT_DIR, help="Where to save snapshots of the model.")
     parser.add_argument("--result-dir", type=str, default=RESULT_DIR, help="Where to save inferred results.")
@@ -248,7 +248,7 @@ def main():
 
     testset = dataset(
         data_dir=args.data_dir,
-        data_list=args.data_val_list,
+        data_list=args.data_test_list,
         ratio=args.resize_ratio,
         train=False,
         transform=composed_transform_test,
