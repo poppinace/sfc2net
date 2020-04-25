@@ -2,7 +2,7 @@
 by Liang Liu， [Hao Lu](https://sites.google.com/site/poppinace/)
 
 ## Installation
-The code has been tested on Python 3.7.4 and PyTorch 1.2.0. Please follow the
+The code has been tested on Python 3.7.3 and PyTorch 1.3.1. Please follow the
 official instructions to configure your environment. See other required packages
 in `requirements.txt` (pending).
 
