@@ -105,7 +105,7 @@ def test(net, testset, test_loader, args):
     cudnn.benchmark = False
     
     # image_list = valset.image_list
-    image_list = [name.split('\t') for name in open(args.data_val_list).read().splitlines()]
+    image_list = [name.split('\t') for name in open(args.data_test_list).read().splitlines()]
       
     epoch_result_dir = os.path.join(args.result_dir, str(0))
     if not os.path.exists(epoch_result_dir):
