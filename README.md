@@ -1,5 +1,5 @@
 # sfc2net
-by Liang Liu， [Hao Lu](https://sites.google.com/site/poppinace/)
+by Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/)
 
 ## Installation
 The code has been tested on Python 3.7.3 and PyTorch 1.3.1. Please follow the
