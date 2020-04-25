@@ -32,10 +32,10 @@ IMG_MEAN = [ 0.4607, 0.4836, 0.3326 ]
 IMG_STD = [0.1058, 0.1065, 0.0999 ]
 
 # system-related parameters
-DATA_DIR = 'G:/dataset/rice_datasets-test/'
+DATA_DIR = './data/rice_datasets-test/'
 DATASET = 'rice'
 EXP = 'sfc2net'
-DATA_VAL_LIST = 'G:/dataset/rice_datasets-test/test.txt'
+DATA_VAL_LIST = './data/rice_datasets-test/test.txt'
 
 RESTORE_FROM = 'model_best.pth.tar'
 SNAPSHOT_DIR = './snapshots'
