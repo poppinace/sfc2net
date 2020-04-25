@@ -6,7 +6,7 @@ The code has been tested on Python 3.7.4 and PyTorch 1.2.0. Please follow the
 official instructions to configure your environment. See other required packages
 in `requirements.txt` (pending).
 
-## Test Your Model
+## Test SFC2Net Model
 **Rice Plant Counting**
 * Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (597 
 Mb)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv ) or [OneDrive (597 
@@ -41,7 +41,7 @@ $./snapshots/rice/sfc2net
 | SFC<sup>2</sup>Net  | This Paper            | Yes           | 25.60  | 37.94  | 4.12  | 0.98          |
 
 
-### Comparison of Different Backbone
+### Comparison of Different Backbones
 | Backbone            | MAE    | MSE    | rMAE | R<sup>2</sup> |   Parameters  | Top-1|
 | :--:                | :--:   | :--:   | :--: |      :--:     |    :--:       | :--: |
 | ResNet18            | 31.82  | 66.80  | 4.66 |      0.93     |    12.6M      | 69.8 |
