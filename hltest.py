@@ -20,9 +20,8 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 
 from hlnet import *
-from hldatasetv2 import *
+from hldataset import *
 from utils import *
-import torchvision.models as models
 cudnn.enabled = True
 
 # constant
@@ -55,7 +54,6 @@ RESIZE_RATIO = 0.25
 # training-related parameters
 NUM_CPU_WORKERS = 0
 PRINT_EVERY = 1
-RANDOM_SEED = 6
 VAL_EVERY = 10
 
 #dataset parameters
@@ -87,18 +85,10 @@ def get_arguments():
     parser.add_argument("--output-stride", type=int, default=OUTPUT_STRIDE, help="Output stride of the model.")
     parser.add_argument("--resize-ratio", type=float, default=RESIZE_RATIO, help="Resizing ratio.")
     parser.add_argument("--model", type=str, default=MODEL, help="model to be chosen.")
-    parser.add_argument("--width-mult", type=float, default=WIDTH_MULT, help="Decoder kernel size.")
-    parser.add_argument("--use-pretrained", action="store_true", help="Whether to use pretrained model.")
-    parser.add_argument("--freeze-bn", action="store_true", help="Whether to freeze encoder bnorm layers.")
-    parser.add_argument("--sync-bn", action="store_true", help="Whether to apply synchronized batch normalization.")
-    parser.add_argument("--use-nonlinear", action="store_true", help="Whether to use nonlinearity in IndexNet.")
-    parser.add_argument("--use-context", action="store_true", help="Whether to use context in IndexNet.")
-    parser.add_argument("--use-squeeze", action="store_true", help="Whether to squeeze IndexNet.")
     # training-related parameters
     parser.add_argument("--evaluate-only", action="store_true", help="Whether to perform evaluation.")
     parser.add_argument("--num-workers", type=int, default=NUM_CPU_WORKERS, help="Number of CPU cores used.")
     parser.add_argument("--print-every", type=int, default=PRINT_EVERY, help="Print information every often.")
-    parser.add_argument("--random-seed", type=int, default=RANDOM_SEED, help="Random seed to have reproducible results.")
     parser.add_argument("--val-every", type=int, default=VAL_EVERY, help="How often performing validation.")
     # classification parameters
     parser.add_argument("--step-log", type=float, default=STEP_DEFAULT, help="Quantization step in the log space.")
@@ -134,15 +124,15 @@ def test(net, testset, test_loader, args):
             h = image.shape[2]
             w = image.shape[3]
                                           
-            ht=int(32*int(h/32))    
-            wt=int(32*int(w/32))
+            ht=int(32 * int(h / 32))    
+            wt=int(32 * int(w / 32))
             if ht!=h:
-                ht=int(32*(int(h/32)+1))  
+                ht=int(32 * (int(h / 32) + 1))  
             if wt!=w:
-                wt=int(32*(int(w/32)+1))  
+                wt=int(32 * (int(w / 32) + 1))  
                                 
-            Img_t=torch.FloatTensor(np.zeros((1,3,ht,wt)))
-            Img_t[:,:,0:h,0:w]=image
+            Img_t=torch.FloatTensor(np.zeros((1, 3, ht, wt)))
+            Img_t[:, :, 0:h, 0:w]=image
             image=Img_t
                 
             # inference
@@ -183,7 +173,7 @@ def test(net, testset, test_loader, args):
             torch.cuda.synchronize()
             end = time()
             if end - start==0:
-                running_frame_rate=999
+                running_frame_rate = 999
             else:
                 running_frame_rate = float(1 / (end - start))
             avg_frame_rate = (avg_frame_rate*i + running_frame_rate)/(i+1)
@@ -204,12 +194,6 @@ def main():
     args.image_mean = np.array(args.image_mean).reshape((1, 1, 3))
     args.image_std = np.array(args.image_std).reshape((1, 1, 3))
     
-    # seeding for reproducbility
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(args.random_seed)
-    torch.manual_seed(args.random_seed)
-    np.random.seed(args.random_seed)
-
     # instantiate dataset
     dataset_list = {
         'rice': RiceDataset
@@ -232,9 +216,9 @@ def main():
         print(item, ':\t' , arguments[item])
     
     # filter parameters   
-    net= Mixnet_l_backbone(pretrained=args.use_pretrained,model_name=args.model,\
+    net= Mixnet_l_backbone(model_name=args.model,\
                            max_class_number=args.max_class_number,step_log=args.step_log, start_log=args.start_log,\
-                           input_size=args.input_size,output_stride=args.output_stride,freeze_bn=args.freeze_bn)
+                           input_size=args.input_size,output_stride=args.output_stride)
     net.cuda()
 
     if args.restore_from is not None:
@@ -248,9 +232,10 @@ def main():
                 for item in arguments:
                     print(item, ':\t' , arguments[item], file=f)
             print("==> no checkpoint found at '{}'".format(args.restore_from))
+            return
 
     # define transform
-    transform_val = [
+    transform_test = [
         Normalize(
             args.image_scale, 
             args.image_mean, 
@@ -259,14 +244,14 @@ def main():
         ToTensor(),
         ZeroPadding(args.output_stride)
     ]
-    composed_transform_val = transforms.Compose(transform_val)
+    composed_transform_test = transforms.Compose(transform_test)
 
     testset = dataset(
         data_dir=args.data_dir,
         data_list=args.data_val_list,
         ratio=args.resize_ratio,
         train=False,
-        transform=composed_transform_val,
+        transform=composed_transform_test,
         gauss_kernel=args.gauss_kernel
     )
     test_loader = DataLoader(
