@@ -66,12 +66,8 @@ python hltest.py
 
 **Some Example**
 
-![Example1][E1]
+![Example1](https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20120515110242_01.png)
 
-![Example1][E2]
+![Example2](https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130726110633_02.png)
 
-![Example1][E3]
-
-[E1]: https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20120515110242_01.png "Example1"
-[E2]: https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130726110633_02.png "Example2"
-[E3]: https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130728110630_01.png "Example3"
+![Example3](https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130728110630_01.png)
