@@ -8,10 +8,8 @@ Created on Fri Jul  6 09:49:51 2018
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from hlblock import *
 import numpy as np
-from mixnet.model_all import tf_mixnet_l_myself,tf_mixnet_l_myself_fusion,tf_mixnet_s_myself, tf_mixnet_l
-import torchvision.models as models
+from mixnet.model_all import tf_mixnet_l_myself_fusion
 
 class Mixnet_l_designed_model       (nn.Module):
     def __init__(self,max_class_number=80,**kwargs):
