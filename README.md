@@ -65,11 +65,11 @@ python hltest.py
 
 
 **Some Example**
-![alt text][E1]
+![][E1]
 
-![alt text][E2]
+![][E2]
 
-![alt text][E3]
+![][E3]
 
 [E1]: https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20120515110242_01.png "Example1"
 [E2]: https://github.com/poppinace/sfc2net/tree/master/example/T0004_SD_20130726110633_02.png "Example2"
