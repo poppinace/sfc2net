@@ -1,4 +1,4 @@
-# sfc2net
+# SFC<sup>2</sup>Net
 by Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/)
 
 ## Installation
