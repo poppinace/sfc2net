@@ -1,5 +1,5 @@
 # SFC<sup>2</sup>Net
-It is the code for High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Networks, Plant Phenomics, in submission.
+It is the code for High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Networks (in submission).
 
 Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, Zhiguo Cao.
 
