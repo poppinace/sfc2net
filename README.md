@@ -9,7 +9,7 @@ official instructions to configure your environment. See other required packages
 in `requirements.txt` (pending).
 
 ## Test SFC<sup>2</sup>Net Model
-**Counting Result on PRC dataset**
+**Counting Results on PRC dataset**
 * Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (597 
 Mb)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv ) or [OneDrive (597 
 Mb)](https://1drv.ms/u/s!AkNf_IPSDakh5zGoa6svOTC_Nmwr?e=nLkAlR)
