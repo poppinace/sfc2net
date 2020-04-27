@@ -38,7 +38,7 @@ python hltest.py
 ```
 
 
-###Counting Results on PRC dataset
+### Counting Results on PRC dataset
 | Method              | Venue, Year           | Pretrained    | MAE    | MSE    | rMAE  | R<sup>2</sup> |
 | :--:                | :--:                  | :--:          | :--:   | :--:   | :--:  | :--:          |
 | MCNN                | CVPR   2016           | No            | 92.11  | 121.52 | 15.33 | 0.89          |
