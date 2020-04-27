@@ -1,9 +1,11 @@
 # SFC<sup>2</sup>Net
-by Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/)
+It is the code for High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Networks, Plant Phenomics, in submission.
+Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, Zhiguo Cao.
 
 ## Installation
 The code has been tested on Python 3.7.3 and PyTorch 1.3.1. Please follow the
-official instructions to configure your environment. 
+official instructions to configure your environment. See other required packages
+in `requirements.txt` (pending).
 
 ## Test SFC<sup>2</sup>Net Model
 **Rice Plant Counting**
