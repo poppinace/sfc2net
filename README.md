@@ -73,6 +73,12 @@ python hltest.py
 | MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    6.3M       | 78.9 |
 
 ### Example
+<p align="left">
+  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
+</p>
 <p align="center">
-  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="example1"/>
+  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
+</p>
+<p align="right">
+  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
 </p>
