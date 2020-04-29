@@ -12,7 +12,7 @@ Plant Phenomics, in submission
   <img src="overview.png" width="850" title="Example"/>
 </p>
 
-### Example
+### Qualitative Results 
 <p align="left">
   <img src="result.png" width="850" title="Example"/>
 </p>
