@@ -1,16 +1,19 @@
 # SFC<sup>2</sup>Net
-It is the code for High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Networks (in submission).
+This repository implements SFC<sup>2</sup>Net proposed in the work:
 
-Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, Zhiguo Cao.
+**High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Networks**
+
+Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, and Zhiguo Cao.
+
+Plant Phenomics, in submission
 
 ## Installation
 The code has been tested on Python 3.7.3 and PyTorch 1.3.1. Please follow the
 official instructions to configure your environment. See other required packages
-in `requirements.txt` (pending).
+in `requirements.txt`.
 
-## Test SFC<sup>2</sup>Net Model
 
-**PRC dataset**
+## RPC dataset
 * Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (597 
 Mb)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv ) or [OneDrive (597 
 Mb)](https://1drv.ms/u/s!AkNf_IPSDakh5zGoa6svOTC_Nmwr?e=nLkAlR)
@@ -22,6 +25,7 @@ $./data/rice_datasets-test
 ├──── test.txt
 ````
 
+## Inference
 **Pre-trained Model on RPC dataset**
 * Download the model from: [BaiduYun (48.8 
 Mb)](https://pan.baidu.com/s/1pWowlSpKdhg6l_9qET2yUw) (code: 9g8e) or [OneDrive (48.8 
@@ -32,11 +36,12 @@ $./snapshots/rice/sfc2net
 ├──── model_best.pth.tar
 ````
 
-**Model Test**
+**Evaluation**
 ```python
 python hltest.py
 ```
 
+## Benchmark Results
 
 ### Counting Results on PRC dataset
 | Method              | Venue, Year           | Pretrained    | MAE    | MSE    | rMAE  | R<sup>2</sup> |
