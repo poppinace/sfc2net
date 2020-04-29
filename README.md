@@ -71,3 +71,8 @@ python hltest.py
 | EfficientNet-B7     | 27.15  | 40.79  | 3.96 |      0.97     |    68.3M      | 84.4 |
 | VGG16               | 30.67  | 57.53  | 4.51 |      0.95     |    15.7M      | 71.6 |
 | MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    6.3M       | 78.9 |
+
+### Example
+<p align="center">
+  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="example1"/>
+</p>
