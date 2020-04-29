@@ -7,6 +7,11 @@ Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, and Zhi
 
 Plant Phenomics, in submission
 
+### Model Structure
+<p align="left">
+  <img src="overview.png" width="850" title="Example"/>
+</p>
+
 ### Example
 <p align="left">
   <img src="result.png" width="850" title="Example"/>
