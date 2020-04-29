@@ -28,8 +28,8 @@ in `requirements.txt`.
 
 ## RPC dataset
 * Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (597 
-Mb)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv ) or [OneDrive (597 
-Mb)](https://1drv.ms/u/s!AkNf_IPSDakh5zGoa6svOTC_Nmwr?e=nLkAlR)
+MB)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv) or [OneDrive (597 
+MB)](https://1drv.ms/u/s!AkNf_IPSDakh5zGoa6svOTC_Nmwr?e=nLkAlR)
 * Unzip the dataset and move it into the `./data` folder, the path structure should look like this:
 ````
 $./data/rice_datasets-test
@@ -41,8 +41,8 @@ $./data/rice_datasets-test
 ## Inference
 **Pre-trained Model on RPC dataset**
 * Download the model from: [BaiduYun (48.8 
-Mb)](https://pan.baidu.com/s/1pWowlSpKdhg6l_9qET2yUw) (code: 9g8e) or [OneDrive (48.8 
-Mb)](https://1drv.ms/u/s!AkNf_IPSDakh5zdqa5c8Co5QzB9y?e=SAiyly)
+MB)](https://pan.baidu.com/s/1pWowlSpKdhg6l_9qET2yUw) (code: 9g8e) or [OneDrive (48.8 
+MB)](https://1drv.ms/u/s!AkNf_IPSDakh5zdqa5c8Co5QzB9y?e=SAiyly)
 * Move the model into the folder which the patch structure is:
 ````
 $./snapshots/rice/sfc2net
@@ -67,7 +67,7 @@ python hltest.py
 
 
 ### Comparison of Different Backbones
-| Backbone            | MAE    | MSE    | rMAE | R<sup>2</sup> |   Parameters  | Top-1 Acc.|
+| Backbone            | MAE    | MSE    | rMAE | R<sup>2</sup> |    #Param.    | ImageNet Top-1 Acc.|
 | :--:                | :--:   | :--:   | :--: |      :--:     |    :--:       | :--: |
 | ResNet18            | 31.82  | 66.80  | 4.66 |      0.93     |    12.6M      | 69.8 |
 | ResNet34            | 34.42  | 61.58  | 4.95 |      0.94     |    22.7M      | 73.3 |
