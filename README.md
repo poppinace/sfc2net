@@ -7,6 +7,19 @@ Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, and Zhi
 
 Plant Phenomics, in submission
 
+### Example
+<p align="left">
+  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
+</p>
+
+<p align="left">
+  <img src="example/T0004_SD_20130726110633_02.png" width="425" title="Example1"/>
+</p>
+
+<p align="left">
+  <img src="example/T0004_SD_20130728110630_01.png" width="425" title="Example1"/>
+</p>
+
 ## Installation
 The code has been tested on Python 3.7.3 and PyTorch 1.3.1. Please follow the
 official instructions to configure your environment. See other required packages
@@ -72,13 +85,4 @@ python hltest.py
 | VGG16               | 30.67  | 57.53  | 4.51 |      0.95     |    15.7M      | 71.6 |
 | MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    6.3M       | 78.9 |
 
-### Example
-<p align="left">
-  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
-</p>
-<p align="center">
-  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
-</p>
-<p align="right">
-  <img src="example/T0004_SD_20120515110242_01.png" width="425" title="Example1"/>
-</p>
+
