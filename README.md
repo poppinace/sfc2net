@@ -9,7 +9,7 @@ Plant Phenomics, in submission
 
 ### Example
 <p align="left">
-  <img src="example/result.png" width="425" title="Example"/>
+  <img src="example/result.png" width="850" title="Example"/>
 </p>
 
 ## Installation
