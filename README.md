@@ -54,7 +54,7 @@ python hltest.py
 ## Benchmark Results
 
 ### Counting Results on PRC dataset
-| Method              | Venue, Year           | Pretrained    | MAE    | MSE    | rMAE  | R<sup>2</sup> |
+| Method              | Venue, Year           | Pretrained    | MAE    | MSE    | rMAE  | r<sup>2</sup> |
 | :--:                | :--:                  | :--:          | :--:   | :--:   | :--:  | :--:          |
 | MCNN                | CVPR   2016           | No            | 92.11  | 121.52 | 15.33 | 0.89          |
 | TasselNetV2         | Plant Methods   2019  | No            | 59.39  | 95.80  | 7.86  | 0.91          |
@@ -64,7 +64,7 @@ python hltest.py
 
 
 ### Comparison of Different Backbones
-| Backbone            | MAE    | MSE    | rMAE | R<sup>2</sup> |    #Param.    | ImageNet Top-1 Acc.|
+| Backbone            | MAE    | MSE    | rMAE | r<sup>2</sup> |    #Param.    | ImageNet Top-1 Acc.|
 | :--:                | :--:   | :--:   | :--: |      :--:     |    :--:       | :--: |
 | ResNet18            | 31.82  | 66.80  | 4.66 |      0.93     |    12.6M      | 69.8 |
 | ResNet34            | 34.42  | 61.58  | 4.95 |      0.94     |    22.7M      | 73.3 |
