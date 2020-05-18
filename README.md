@@ -53,7 +53,7 @@ python hltest.py
 
 ## Benchmark Results
 
-### Counting Results on PRC dataset
+### Counting Results on RPC dataset
 | Method              | Venue, Year           | Pretrained    | MAE    | MSE    | rMAE  | r<sup>2</sup> |
 | :--:                | :--:                  | :--:          | :--:   | :--:   | :--:  | :--:          |
 | MCNN                | CVPR   2016           | No            | 92.11  | 121.52 | 15.33 | 0.89          |
@@ -80,6 +80,6 @@ python hltest.py
 | EfficientNet-B6     | 29.96  | 50.03  | 4.42 |      0.96     |    44.6M      | 84.2 |
 | EfficientNet-B7     | 27.15  | 40.79  | 3.96 |      0.97     |    68.3M      | 84.4 |
 | VGG16               | 30.67  | 57.53  | 4.51 |      0.95     |    15.7M      | 71.6 |
-| MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    6.3M       | 78.9 |
+| MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    7.8M       | 78.9 |
 
 
