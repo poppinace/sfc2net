@@ -40,7 +40,7 @@ $./data/rice_datasets-test
 * Download the model from: [BaiduYun (48.8 
 MB)](https://pan.baidu.com/s/1pWowlSpKdhg6l_9qET2yUw) (code: 9g8e) or [OneDrive (48.8 
 MB)](https://1drv.ms/u/s!AkNf_IPSDakh5zdqa5c8Co5QzB9y?e=SAiyly)
-* Move the model into the folder which the patch structure is:
+* Move the model into the folder, and the path structure should be:
 ````
 $./snapshots/rice/sfc2net
 ├──── model_best.pth.tar
@@ -53,7 +53,7 @@ python hltest.py
 
 ## Benchmark Results
 
-### Counting Results on RPC dataset
+### Counting Results on the RPC Dataset
 | Method              | Venue, Year           | Pretrained    | MAE    | MSE    | rMAE  | r<sup>2</sup> |
 | :--:                | :--:                  | :--:          | :--:   | :--:   | :--:  | :--:          |
 | MCNN                | CVPR   2016           | No            | 92.11  | 121.52 | 15.33 | 0.89          |
@@ -80,6 +80,6 @@ python hltest.py
 | EfficientNet-B6     | 29.96  | 50.03  | 4.42 |      0.96     |    81.7M      | 84.2 |
 | EfficientNet-B7     | 27.15  | 40.79  | 3.96 |      0.97     |    127.8M     | 84.4 |
 | VGG16               | 30.67  | 57.53  | 4.51 |      0.95     |    15.7M      | 71.6 |
-| MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    15.1M      | 78.9 |
+| MixNet-L            | 25.60  | 37.94  | 4.12 |      0.98     |    7.8M      | 78.9 |
 
 
