@@ -37,8 +37,8 @@ $./data/rice_datasets-test
 
 ## Inference
 **Pre-trained Model on RPC dataset**
-* Download the model from: [BaiduYun (26.9 
-MB)](https://pan.baidu.com/s/1HIFPbLJYCJy1ux1YO6bVsQ) (code: nhxk) or [OneDrive (26.9 
+* Download the model from: [BaiduYun (26.2 
+MB)](https://pan.baidu.com/s/1HIFPbLJYCJy1ux1YO6bVsQ) (code: nhxk) or [OneDrive (26.2 
 MB)](https://1drv.ms/u/s!AkNf_IPSDakh5zdqa5c8Co5QzB9y?e=EhqoWA)
 * Move the model into the folder, and the path structure should be:
 ````
