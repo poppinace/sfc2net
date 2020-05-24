@@ -1680,22 +1680,14 @@ class GenEfficientNetMyself_fusion(nn.Module):
             channel_multiplier, channel_divisor, channel_min,
             pad_type, act_fn, se_gate_fn, se_reduce_mid,
             bn_args, drop_connect_rate, verbose=_DEBUG)
-        self.blocks = nn.Sequential(*builder(in_chs, block_args))
-                
-        self.layer0=self.blocks[0:2]
-        self.layer1=self.blocks[2]
-        self.layer2=self.blocks[3]
-        self.layer3=self.blocks[4:6]
-        in_chs = builder.in_chs
-
-        if not head_conv or head_conv == 'none':
-            self.efficient_head = False
-            self.conv_head = None
-            assert in_chs == self.num_features
-        else:
-            self.efficient_head = head_conv == 'efficient'
-            self.conv_head = select_conv2d(in_chs, self.num_features, 1, padding=pad_type)
-            self.bn2 = None if self.efficient_head else nn.BatchNorm2d(self.num_features, **bn_args)
+        blocks = nn.Sequential(*builder(in_chs, block_args))
+                        
+        self.layer0=blocks[0]
+        self.layer1=blocks[1]
+        self.layer2=blocks[2]
+        self.layer3=blocks[3]
+        self.layer4=blocks[4]
+        self.layer5=blocks[5]
 
         for m in self.modules():
             if weight_init == 'goog':
@@ -1710,13 +1702,12 @@ class GenEfficientNetMyself_fusion(nn.Module):
         x = self.bn1(x2)
         x = self.act_fn(x, inplace=True)
 
-        x4 = self.layer0(x)
-        x8 = self.layer1(x4)
-        x16 = self.layer2(x8)
-        x = self.layer3(x16)
-        x = self.conv_head(x)
-        x = self.bn2(x)
-        x32 = self.act_fn(x, inplace=True) #7 1536
+        x2 = self.layer0(x)  #112 32
+        x4 = self.layer1(x2) #56 40
+        x8 = self.layer2(x4) #28 56
+        x16 = self.layer3(x8) #14 104
+        x16 = self.layer4(x16) #14 160
+        x32 = self.layer5(x16) #7 264
         return x2,x4,x8,x16,x32
 
     def forward(self, x):

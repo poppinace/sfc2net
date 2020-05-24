@@ -19,7 +19,7 @@ class Mixnet_l_designed_model(nn.Module):
         # prediction layers
         self.classification = nn.Sequential(
             nn.AvgPool2d((4, 4), stride=(1, 1)),
-            nn.Conv2d(104, 256, 1, bias=False),
+            nn.Conv2d(112, 256, 1, bias=False),
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
             nn.Conv2d(256, max_class_number, 1)
@@ -40,7 +40,8 @@ class Mixnet_l_classification_fusion(nn.Module):
         self.output_stride = 8
             
         self.class2regression = torch.FloatTensor(self.class2regression).cuda()
-        self.backbone = tf_mixnet_l_myself_fusion()
+        self.backbone = tf_mixnet_l_myself_fusion() #mixnet is borrow from Ross Wightman (rwightman)
+        
         if freeze_bn:
             self.freeze_bn()
         self.designed_model =  Mixnet_l_designed_model(max_class_number)
@@ -91,34 +92,33 @@ class Up_sample_mixnet_l(nn.Module):
     def __init__(self):
         super(Up_sample_mixnet_l, self).__init__()
         
-        self.layer32_16_1 = nn.Conv2d(in_channels=1536, out_channels=208, kernel_size=1, padding=0) 
-        self.layer32_16_2 = nn.BatchNorm2d(208)
+        self.layer32_16_1 = nn.Conv2d(in_channels=264, out_channels=320, kernel_size=1, padding=0) 
+        self.layer32_16_2 = nn.BatchNorm2d(320)
         self.layer32_16_3 = nn.ReLU(inplace=True)
         self.layer32_16_4 = nn.UpsamplingBilinear2d(scale_factor=2)
-        self.layer32_16_5 = nn.Conv2d(in_channels=208, out_channels=208, kernel_size=1, padding=0) 
-        self.layer32_16_6 = nn.BatchNorm2d(208)
+        self.layer32_16_5 = nn.Conv2d(in_channels=320, out_channels=320, kernel_size=3, padding=1) 
+        self.layer32_16_6 = nn.BatchNorm2d(320)
         self.layer32_16_7 = nn.ReLU(inplace=True)
-        self.layer32_16_8 = nn.Conv2d(in_channels=104, out_channels=104, kernel_size=1, padding=0) 
-        self.layer32_16_9 = nn.BatchNorm2d(104)
+        self.layer32_16_8 = nn.Conv2d(in_channels=160, out_channels=160, kernel_size=1, padding=0) 
+        self.layer32_16_9 = nn.BatchNorm2d(160)
         self.layer32_16_10 = nn.ReLU(inplace=True)
-        self.layer32_16_11 = nn.Conv2d(in_channels=104+208, out_channels=208, kernel_size=1, padding=0) 
-        self.layer32_16_12 = nn.BatchNorm2d(208)
+        self.layer32_16_11 = nn.Conv2d(in_channels=160+320, out_channels=320, kernel_size=1, padding=0) 
+        self.layer32_16_12 = nn.BatchNorm2d(320)
         self.layer32_16_13 = nn.ReLU(inplace=True)
                     
-        self.layer16_8_1 = nn.Conv2d(in_channels=208, out_channels=104, kernel_size=1, padding=0) 
-        self.layer16_8_2 = nn.BatchNorm2d(104)
+        self.layer16_8_1 = nn.Conv2d(in_channels=320, out_channels=112, kernel_size=1, padding=0) 
+        self.layer16_8_2 = nn.BatchNorm2d(112)
         self.layer16_8_3 = nn.ReLU(inplace=True)
         self.layer16_8_4 = nn.UpsamplingBilinear2d(scale_factor=2)
-        self.layer16_8_5 = nn.Conv2d(in_channels=104, out_channels=104, kernel_size=1, padding=0) 
-        self.layer16_8_6 = nn.BatchNorm2d(104)
+        self.layer16_8_5 = nn.Conv2d(in_channels=112, out_channels=112, kernel_size=3, padding=1) 
+        self.layer16_8_6 = nn.BatchNorm2d(112)
         self.layer16_8_7 = nn.ReLU(inplace=True)
         self.layer16_8_8 = nn.Conv2d(in_channels=56, out_channels=56, kernel_size=1, padding=0) 
         self.layer16_8_9 = nn.BatchNorm2d(56)
         self.layer16_8_10 = nn.ReLU(inplace=True)
-        self.layer16_8_11 = nn.Conv2d(in_channels=56+104, out_channels=104, kernel_size=1, padding=0) 
-        self.layer16_8_12 = nn.BatchNorm2d(104)
+        self.layer16_8_11 = nn.Conv2d(in_channels=56+112, out_channels=112, kernel_size=1, padding=0) 
+        self.layer16_8_12 = nn.BatchNorm2d(112)
         self.layer16_8_13 = nn.ReLU(inplace=True)
-        
     def forward(self, x8,x16,x32):
         x = self.layer32_16_1 (x32)
         x = self.layer32_16_2 (x)
@@ -175,3 +175,29 @@ def Mixnet_l_backbone(pretrained=False,
     net = Mixnet_l_classification_fusion(freeze_bn=freeze_bn, class2regression=class2regression, **kwargs)
 
     return net
+
+if __name__ == "__main__":
+    net = Mixnet_l_backbone(model_name='mixnet_fusion_classification').cuda()
+    net.eval()
+
+    from modelsummary import get_model_summary
+    net.cuda()
+    dump_x = torch.randn(1, 3, 640, 480).cuda()
+    print(get_model_summary(net, dump_x))
+
+    from time import time
+    import numpy as np
+
+    with torch.no_grad():
+        frame_rate = np.zeros((100, 1))
+        t = np.zeros((100, 1))
+        for i in range(100):
+            x = torch.randn(1, 3, 1088, 736).cuda()
+            torch.cuda.synchronize()
+            start = time()
+            y = net(x.cuda())
+            torch.cuda.synchronize()
+            end = time()
+            running_frame_rate = 1 * float(1 / (end - start))
+            frame_rate[i] = running_frame_rate
+        print(np.mean(frame_rate))
