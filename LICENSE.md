@@ -1,5 +1,5 @@
 
-SFC2Net for non-commercial purposes
+SFC2Net and RPC dataset for non-commercial purposes
 
 Copyright (c) 2020 the authors
 All rights reserved.
