@@ -5,7 +5,7 @@ This repository implements SFC<sup>2</sup>Net proposed in the work:
 
 Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, and Zhiguo Cao.
 
-Plant Phenomics, in submission
+Plant Phenomics, 2020
 
 ### Model Structure
 <p align="left">
@@ -82,4 +82,7 @@ python hltest.py
 | VGG16               | 30.67  | 57.53  | 4.51 |      0.95     |    15.7M      | 71.6 |
 | MixNet-L            | 25.51  | 38.06  | 3.82 |      0.98     |    8.3M       | 78.9 |
 
+## Permission
+The code and data are only for non-commercial purposes. Copyrights reserved to authors.
 
+The training set of the RPC dataset is made available upon request. Contact: Hao Lu (poppinace@foxmail.com)
