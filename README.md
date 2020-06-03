@@ -3,7 +3,7 @@ This repository implements SFC<sup>2</sup>Net proposed in the work:
 
 **High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Networks**
 
-Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, and Zhiguo Cao.
+Liang Liu, [Hao Lu](https://sites.google.com/site/poppinace/), Yanan Li, and Zhiguo Cao
 
 Plant Phenomics, 2020
 
