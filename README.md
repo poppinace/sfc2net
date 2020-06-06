@@ -82,7 +82,18 @@ python hltest.py
 | VGG16               | 30.67  | 57.53  | 4.51 |      0.95     |    15.7M      | 71.6 |
 | MixNet-L            | 25.51  | 38.06  | 3.82 |      0.98     |    8.3M       | 78.9 |
 
+## Citation
+If you find this work or code useful for your research, please cite:
+```
+@article{liu2020high,
+  title={High-Throughput Rice Density Estimation from Transplantation to Tillering Stages Using Deep Network},
+  author={Liu, Liang and Lu, Hao and Li, Yanan and Cao, Zhiguo},
+  journal={Plant Phenomics},
+  year={2020}
+}
+```
+
 ## Permission
-The code and data are only for non-commercial purposes. Copyrights reserved to authors.
+The code and data are only for non-commercial purposes. Copyrights reserved.
 
 The training set of the RPC dataset is made available upon request. Contact: Hao Lu (poppinace@foxmail.com)
