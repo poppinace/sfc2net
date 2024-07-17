@@ -24,14 +24,14 @@ in `requirements.txt`.
 
 
 ## The RPC Dataset
-* Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (597 
-MB)](https://pan.baidu.com/s/12IDidkL267dpNSvNrcFRUQ) (code: cirv) or [OneDrive (597 
-MB)](https://1drv.ms/u/s!AkNf_IPSDakh5zGoa6svOTC_Nmwr?e=nLkAlR)
+* Download the Rice Plant Counting (RPC) test dataset from: [BaiduYun (1.6 
+GB)](https://pan.baidu.com/s/1GeNV-U0MGD4eZ4E5iNc1bA) (code: amg2)
 * Unzip the dataset and move it into the `./data` folder, the path structure should look like this:
 ````
-$./data/rice_datasets-test
+$./data/rice_plant_counting_datasets
 ├──── images
 ├──── label_mat
+├──── train.txt
 ├──── test.txt
 ````
 
